@@ -10,7 +10,34 @@ app.use(cors());        // 브라우저의 다양한 사용을 위해 설정
 
 // get요청이 오면 res.send를 보내주겠다. -> 브라우저에 http://localhost:8080/customers 입력해서 확인해보기
 app.get('/customers', async(req,res)=>{
-    res.send('고객리스트 입니다.')
+    res.send({
+        data :[
+            {
+              no:0,
+              name: "김그린",
+              phone: '010-1234-1234',
+              birthday: '1987-12-12',
+              gender: '남성',
+              addr: '울산 남구 삼산동 화합로 12'
+            },
+            {
+              no:1,
+              name: "이블루",
+              phone: '010-1234-4321',
+              birthday: '1987-12-13',
+              gender: '여성',
+              addr: '울산 남구 삼산동 화합로 15'
+            },
+            {
+              no:3,
+              name: "성레드",
+              phone: '010-4321-1234',
+              birthday: '1987-11-12',
+              gender: '여성',
+              addr: '울산 남구 삼산동 화합로 22'
+            },
+          ]
+    })
 })
 // post요청 오면 res.send를 보내주겠다. -> 포스트맨으로 http://localhost:8080/createcustomer확인해보기
 app.post('/createcustomer', async(req,res)=>{
