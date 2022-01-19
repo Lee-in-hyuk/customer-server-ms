@@ -72,6 +72,15 @@ app.post('/addCustomer',async(req,res)=>{
     res.send('그린컴퓨터');
 })
 
+// 삭제하기
+// delete from 테이블명 where 컬럼명 = 값
+app.delete('/customer/:id', async(req,res)=>{
+    const param = req.params;
+    connection.query(`delete from customers where c_no = ${param.id}`,(err, rows, fields)=>{
+        res.send(rows);
+    })
+})
+
 // 셋팅한 app을 실행
 app.listen(port, ()=>{
     console.log('고객서버가 돌아가고 있습니다.')
