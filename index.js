@@ -47,6 +47,16 @@ app.get('/customer/:id', async(req,res)=>{
     )
 })
 
+app.get('/edit/:id', async(req,res)=>{
+    const param = req.params;
+    connection.query(
+        `SELECT * FROM customers where c_no=${param.id}`,
+        (err, rows, fields) =>{
+            res.send(rows);
+        }
+    )
+})
+
 // post요청 오면 res.send를 보내주겠다. -> 포스트맨으로 http://localhost:8080/createcustomer확인해보기
 // app.post('/createcustomer', async(req,res)=>{
 //     res.send('등록되었습니다.')
@@ -70,6 +80,19 @@ app.post('/addCustomer',async(req,res)=>{
         console.log(result);
     })
     res.send('그린컴퓨터');
+})
+
+// 수정하기
+// update 테이블명 set 컬럼1 = 값1,컬럼2 = 값2... where 컬럼명 = 값;
+app.put('/edit/:id', async(req,res)=>{
+    const param = req.params;
+    const { c_name, c_phone, c_birthday, c_gender, c_addr } = req.body; 
+    connection.query(`update customers set c_name=?, c_phone=?, c_birthday=?, c_gender=?, c_addr=? where c_no=${param.id}`,
+    [c_name, c_phone, c_birthday, c_gender, c_addr],
+    function(err, rows, fields){
+        console.log(rows);
+    })
+    res.send('수정되었습니다.');
 })
 
 // 삭제하기
