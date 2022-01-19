@@ -23,6 +23,7 @@ app.use(express.json()); //json형식의 데이터를 처리할 수 있도록 �
 app.use(cors());        // 브라우저의 다양한 사용을 위해 설정
 
 // get요청이 오면 res.send를 보내주겠다. -> 브라우저에 http://localhost:8080/customers 입력해서 확인해보기
+// 게시글 전체 조회
 app.get('/customers', async(req,res)=>{
     // php할 때 result = mysqli_query()날려주는거랑 같은 개념
     // query(쿼리문, 콜백함수(에러값,결과,컬럼))
@@ -33,6 +34,17 @@ app.get('/customers', async(req,res)=>{
         }
     )
     // 여기까지 작성하고 http://localhost:8080/customers 브라우저에 입력했을 때 데이터 잘 나오면 성공
+})
+// 해당 c_no 게시글 조회
+// DetailCustomer.js에서 axios.get(`http://localhost:8080/customer/${id}`)에 있는 ${id}의 값을 가져옴
+app.get('/customer/:id', async(req,res)=>{
+    const param = req.params;
+    connection.query(
+        `SELECT * FROM customers where c_no=${param.id}`,
+        (err, rows, fields) =>{
+            res.send(rows);
+        }
+    )
 })
 
 // post요청 오면 res.send를 보내주겠다. -> 포스트맨으로 http://localhost:8080/createcustomer확인해보기
